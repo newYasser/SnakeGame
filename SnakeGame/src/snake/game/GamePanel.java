@@ -1,24 +1,24 @@
 package snake.game;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
-import javax.swing.Timer;
+import javax.swing.*;
 
 
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements ActionListener{
 
+
+    
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-    
 	private static final int SCREEN_WIDTH = 600;
 	private static final int SCREEN_HIGHT = 600;
 	private static final int UNIT_SIZE = 25;
@@ -45,9 +45,7 @@ public class GamePanel extends JPanel implements ActionListener{
     	startGame();
     }
 
-	
-	
-	
+
 	private void startGame() {
 		newApple();
 		running = true;
@@ -56,18 +54,27 @@ public class GamePanel extends JPanel implements ActionListener{
 		
 	}
 	
+	public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+		draw(g);
+	}
+	
 
-
-
- 
-
-	private void newApple() {
-		// TODO Auto-generated method stub
-		
+	private void draw(Graphics g) {
+		for(int i = 0; i< SCREEN_HIGHT/UNIT_SIZE;i++) {
+			g.drawLine(i*UNIT_SIZE,0,i*UNIT_SIZE,SCREEN_HIGHT);
+			g.drawLine(0,i*UNIT_SIZE,SCREEN_WIDTH,i*UNIT_SIZE);	
+		}
+		g.setColor(Color.yellow);
+		g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
 	}
 
 
-
+	private void newApple() {
+		appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+		appleY = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+		
+	}
 
 
 	@Override
@@ -81,9 +88,12 @@ public class GamePanel extends JPanel implements ActionListener{
 	public class MyKeyAdapter extends KeyAdapter{
 		@Override
 		public void keyPressed(KeyEvent e) {
-		
+	
 		
 	}
 
   }
+
+
+
 }
