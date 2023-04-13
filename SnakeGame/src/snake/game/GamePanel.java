@@ -26,7 +26,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	private static final int DELAY = 75;
 	private final int x[] = new int[GAME_UNITS];
 	private final int y[] = new int[GAME_UNITS];
-	private int bodyparts = 6;
+	private int bodyParts = 6;
 	private int appleEaten;
 	private int appleX;
 	private int appleY;
@@ -67,6 +67,12 @@ public class GamePanel extends JPanel implements ActionListener{
 		}
 		g.setColor(Color.yellow);
 		g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+		
+		for(int i = 0; i < bodyParts;i++) {
+			g.setColor(Color.yellow);
+			g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+
+		}
 	}
 
 
@@ -75,16 +81,58 @@ public class GamePanel extends JPanel implements ActionListener{
 		appleY = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
 		
 	}
+	
+	public void move() {
+		for(int i = bodyParts; i > 0;i--) {
+			x[i] =x[i - 1];
+			y[i] = y[i - 1];
+		}
+		
+		switch(direction) {
+		case 'U':
+			y[0] = y[0] - UNIT_SIZE;
+			break;
+		case 'D':
+			y[0] = y[0] + UNIT_SIZE;
+			break;
+		case 'L':
+			x[0] = x[0] - UNIT_SIZE;
+			break;
+		case 'R':
+		    x[0] = x[0] + UNIT_SIZE;
+			break;
+		}
+	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if(running) {
+			move();
+			checkApple();
+			checkCollisions();
+			
+		}
+		repaint();
+		
 		
 	}
 	
 	
 	
+	private void checkCollisions() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	private void checkApple() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 	public class MyKeyAdapter extends KeyAdapter{
 		@Override
 		public void keyPressed(KeyEvent e) {
