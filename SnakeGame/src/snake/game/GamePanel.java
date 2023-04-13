@@ -61,17 +61,23 @@ public class GamePanel extends JPanel implements ActionListener{
 	
 
 	private void draw(Graphics g) {
-		for(int i = 0; i< SCREEN_HIGHT/UNIT_SIZE;i++) {
-			g.drawLine(i*UNIT_SIZE,0,i*UNIT_SIZE,SCREEN_HIGHT);
-			g.drawLine(0,i*UNIT_SIZE,SCREEN_WIDTH,i*UNIT_SIZE);	
-		}
-		g.setColor(Color.yellow);
-		g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
 		
-		for(int i = 0; i < bodyParts;i++) {
-			g.setColor(Color.yellow);
-			g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+		if(running){
+		  for(int i = 0; i< SCREEN_HIGHT/UNIT_SIZE;i++) {
+			  g.drawLine(i*UNIT_SIZE,0,i*UNIT_SIZE,SCREEN_HIGHT);
+			  g.drawLine(0,i*UNIT_SIZE,SCREEN_WIDTH,i*UNIT_SIZE);	
+	     }
+		 g.setColor(Color.yellow);
+		 g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+		
+		  for(int i = 0; i < bodyParts;i++) {
+			  g.setColor(Color.yellow);
+			  g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
 
+		    }
+	    }
+		else {
+			gameOver(g);
 		}
 	}
 
@@ -141,10 +147,23 @@ public class GamePanel extends JPanel implements ActionListener{
 
 
 	private void checkApple() {
-		// TODO Auto-generated method stub
+		if(x[0] == appleX && y[0] == appleY) {
+			bodyParts++;
+			appleEaten++;
+			newApple();
+		}
 		
 	}
-
+    
+	
+	public void gameOver(Graphics g) {
+		g.setColor(Color.red);
+		g.setFont(new Font("Ink Free",Font.BOLD,75));
+		FontMetrics metrics = getFontMetrics(g.getFont());
+		g.drawString("Game Over",(SCREEN_WIDTH - metrics.stringWidth("Game Over"))/2, SCREEN_HIGHT/2);
+		
+		
+	}
 
 
 	public class MyKeyAdapter extends KeyAdapter{
